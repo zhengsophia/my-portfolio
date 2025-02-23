@@ -19,28 +19,27 @@ let pages = [
   { url: "https://github.com/zhengsophia", title: "GitHub" },
 ];
 
-let nav = document.createElement("nav");
-document.body.prepend(nav);
+// let nav = document.createElement("nav");
+// document.body.prepend(nav);
 
-for (let p of pages) {
-  let url = p.url;
-  // if (!ARE_WE_HOME && !url.startsWith("http")) {
-  //   url = "../" + url;
-  // }
-  let title = p.title;
-  //   nav.insertAdjacentHTML("beforeend", `<a href="${url}">${title}</a>`);
-  let a = document.createElement("a");
-  a.href = url;
-  a.textContent = title;
-  // console.log(a.host, location.host, a.pathname, location.pathname);
-  if (a.host === location.host && a.pathname === location.pathname) {
-    a.classList.add("current");
-  }
-  if (a.host !== location.host) {
-    a.target = "_blank";
-  }
-  nav.append(a);
-}
+// for (let p of pages) {
+//   let url = p.url;
+//   // if (!ARE_WE_HOME && !url.startsWith("http")) {
+//   //   url = "../" + url;
+//   // }
+//   let title = p.title;
+//   //   nav.insertAdjacentHTML("beforeend", `<a href="${url}">${title}</a>`);
+//   let a = document.createElement("a");
+//   a.href = url;
+//   a.textContent = title;
+//   if (a.host === location.host && a.pathname === location.pathname) {
+//     a.classList.add("current");
+//   }
+//   if (a.host !== location.host) {
+//     a.target = "_blank";
+//   }
+//   nav.append(a);
+// }
 
 document.body.insertAdjacentHTML(
   "afterbegin",
