@@ -41,32 +41,32 @@ let pages = [
 //   nav.append(a);
 // }
 
-document.body.insertAdjacentHTML(
-  "afterbegin",
-  `
-	<label class="color-scheme">
-		Theme:
-		<select>
-			<option value="light dark">Auto</option>
-			<option value="light">Light</option>
-			<option value="dark">Dark</option>
-		</select>
-	</label>`
-);
+// document.body.insertAdjacentHTML(
+//   "afterbegin",
+//   `
+// 	<label class="color-scheme">
+// 		Theme:
+// 		<select>
+// 			<option value="light dark">Auto</option>
+// 			<option value="light">Light</option>
+// 			<option value="dark">Dark</option>
+// 		</select>
+// 	</label>`
+// );
 
-let select = document.querySelector(".color-scheme select");
+// let select = document.querySelector(".color-scheme select");
 
-if ("colorScheme" in localStorage) {
-  document.documentElement.style.setProperty(
-    "color-scheme",
-    localStorage.colorScheme
-  );
-  select.value = localStorage.colorScheme;
-}
+// if ("colorScheme" in localStorage) {
+//   document.documentElement.style.setProperty(
+//     "color-scheme",
+//     localStorage.colorScheme
+//   );
+//   select.value = localStorage.colorScheme;
+// }
 
-select.addEventListener("input", (event) => {
-  const selectedScheme = event.target.value;
-  localStorage.colorScheme = selectedScheme;
-  document.documentElement.style.setProperty("color-scheme", selectedScheme);
-  console.log("color scheme changed to", event.target.value);
-});
+// select.addEventListener("input", (event) => {
+//   const selectedScheme = event.target.value;
+//   localStorage.colorScheme = selectedScheme;
+//   document.documentElement.style.setProperty("color-scheme", selectedScheme);
+//   console.log("color scheme changed to", event.target.value);
+// });
