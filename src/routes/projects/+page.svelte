@@ -43,7 +43,7 @@
 <svelte:head>
   <title>Sophia's Projects</title>
 </svelte:head>
-<h1>My {projects.length} Projects</h1>
+<h1>I have {projects.length} Projects</h1>
 <Pie data={pieData} bind:selectedIndex={selectedYearIndex} />
 
 <input
