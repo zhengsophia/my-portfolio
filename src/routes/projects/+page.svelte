@@ -46,14 +46,38 @@
 <h1>I have {projects.length} Projects</h1>
 <Pie data={pieData} bind:selectedIndex={selectedYearIndex} />
 
-<input
-  type="search"
-  bind:value={query}
-  aria-label="Search projects"
-  placeholder="🔍 Search projects…"
-/>
+<div class="search-wrapper">
+  <span aria-hidden="true" class="emoji">🔍</span>
+  <input
+    type="search"
+    bind:value={query}
+    aria-label="Search projects"
+    placeholder="Search projects…"
+  />
+</div>
+
 <div class="projects">
   {#each filteredByYear as p}
     <Project data={p} />
   {/each}
 </div>
+
+<style>
+  .search-wrapper {
+    position: relative;
+  }
+
+  .emoji {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  input[type="search"] {
+    padding-left: 2rem; /* gives space for the emoji */
+    width: 100%;
+  }
+</style>

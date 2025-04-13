@@ -4,6 +4,7 @@
   // Define arcData and arcs outside the reactive block
   let arcData;
   let arcs;
+  let liveText = "";
 
   let arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
   //   let arc = arcGenerator({
@@ -17,21 +18,43 @@
     arcData = sliceGenerator(data);
     arcs = arcData.map((d) => arcGenerator(d));
   }
-  let colors = d3.scaleOrdinal(d3.schemeTableau10);
+  $: description = `A pie chart showing project counts by year. ${data.map((d) => `${d.label}: ${d.value} projects`).join(", ")}.`;
+
+  let colors = d3.scaleQuantize().range(d3.schemeBlues[5]);
   export let selectedIndex = -1;
+
+  function toggleWedge(index, event) {
+    if (!event.key || event.key === "Enter") {
+      selectedIndex = index;
+      const d = data[index];
+      liveText = `${d.label}: ${d.value} projects selected.`;
+    }
+  }
 </script>
 
 <div class="container">
-  <svg viewBox="-50 -50 100 100">
+  <svg
+    viewBox="-50 -50 100 100"
+    role="img"
+    aria-labelledby="pie-title pie-desc"
+  >
+    <title id="pie-title">Projects by Year</title>
+    <desc id="pie-desc">{description}</desc>
+    <circle class="pie-outline" r="50" />
     {#each arcs as arc, index}
       <path
         d={arc}
         fill={colors(index)}
         class:selected={selectedIndex === index}
-        on:click={(e) => (selectedIndex = selectedIndex === index ? -1 : index)}
+        on:click={(e) => toggleWedge(index, e)}
+        on:keydown={(e) => toggleWedge(index, e)}
+        tabindex="0"
+        role="button"
+        aria-label="Pie Chart"
       />
     {/each}
   </svg>
+  <p aria-live="polite" class="sr-only">{liveText}</p>
   <ul class="legend">
     {#each data as d, index}
       <li style="--color: {colors(index)}">
@@ -43,12 +66,26 @@
 </div>
 
 <style>
-  svg:has(path:hover) path:not(:hover) {
+  .pie-outline {
+    stroke: black;
+    fill: none;
+    stroke-width: 1;
+  }
+
+  path:focus-visible {
+    stroke: white;
+    stroke-width: 2px;
+    stroke-dasharray: 4; /* Adjust the dash length as needed */
+  }
+
+  svg:hover path:not(:hover),
+  svg:focus-visible path:not(:focus-visible) {
     opacity: 50%;
   }
 
   path {
     transition: 300ms;
+    outline: none;
   }
 
   .selected {
@@ -57,6 +94,14 @@
     &:is(path) {
       fill: var(--color);
     }
+  }
+
+  .sr-only {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
 
   svg {
